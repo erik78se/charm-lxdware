@@ -1,0 +1,8 @@
+# Copyright 2022 erik@dwellir.com
+# See LICENSE file for licensing details.
+
+options:
+  github-release-tag:
+    default: latest
+    description: Github relase tag_name, E.g. latest or v3.4.0 from which we try installing from.
+    type: string

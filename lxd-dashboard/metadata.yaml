@@ -1,0 +1,10 @@
+# Copyright 2022 erik@dwellir.com
+# See LICENSE file for licensing details.
+
+name: lxd-dashboard
+display-name: |
+  lxd-dashboard
+description: |
+  This charm deploys the lxdware lxd-dashboard GUI for lxd. 
+summary: |
+  This deploys a GUI named lxd-dashboard for lxd. See: https://lxdware.com
