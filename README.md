@@ -1,6 +1,8 @@
 # lxdware-dashboard
 This is a juju charm which sets up lxdware and allows you to manage it over time.
 
+Your can find it on charmhub.io: https://charmhub.io/lxd-dashboard
+
 Its developed with the ops framework for juju.
 
 See full documentation: [lxd-dashboard/README.md](lxd-dashboard/README.md)
