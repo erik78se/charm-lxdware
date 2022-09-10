@@ -86,6 +86,10 @@ class LxdDashboardCharm(CharmBase):
             subprocess.run(cmd7.split(), check = True)
             self._stored.current_dashboard_version = str(dl[0])
 
+            # Handle jammy and php8.1
+            if 0 == open('/etc/issue', 'r').read().find('Ubuntu 22.04'):
+                self._patch_nginx_from_php74_to_php81()
+
         except Exception as e:
             print("Error fetching/installing sofware release", str(e))
             sys.exit(1)
@@ -107,6 +111,26 @@ class LxdDashboardCharm(CharmBase):
             self.unit.status = ActiveStatus("Operational")
             self.unit.set_workload_version(self._stored.current_dashboard_version)
         
+    def _patch_nginx_from_php74_to_php81(self):
+        """
+        Patch /etc/nginx/sites-enabled/default to use php8.1
+
+        This is needed for ubuntu jammy (22.04).
+        """
+        file = open("/etc/nginx/sites-enabled/default", "r")
+        replacement = ""
+        # using the for loop
+        for line in file:
+            line = line.strip()
+            changes = line.replace("fastcgi_pass unix:/run/php/php7.4-fpm.sock;", "fastcgi_pass unix:/run/php/php8.1-fpm.sock;")
+            replacement = replacement + changes + "\n"
+
+        file.close()
+        # opening the file in write mode
+        fout = open("/etc/nginx/sites-enabled/default", "w")
+        fout.write(replacement)
+        fout.close()
+    
 
 if __name__ == "__main__":
     main(LxdDashboardCharm)
